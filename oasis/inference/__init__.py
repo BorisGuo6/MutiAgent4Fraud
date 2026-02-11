@@ -14,15 +14,16 @@
 from .inference_manager import InferencerManager
 from .inference_thread import InferenceThread
 
-# OpenClaw 兼容模块
-from .openclaw_adapter import OpenClawInferenceAdapter
-from .openclaw_server import OpenClawServer, ServerConfig
+# OpenClaw 兼容模块（可选依赖）
+try:
+    from .openclaw_adapter import OpenClawInferenceAdapter  # type: ignore
+    from .openclaw_server import OpenClawServer, ServerConfig  # type: ignore
+except Exception:  # pragma: no cover - optional module may be missing
+    OpenClawInferenceAdapter = None  # type: ignore
+    OpenClawServer = None  # type: ignore
+    ServerConfig = None  # type: ignore
 
-__all__ = [
-    "InferencerManager",
-    "InferenceThread",
-    # OpenClaw 兼容
-    "OpenClawInferenceAdapter",
-    "OpenClawServer",
-    "ServerConfig",
-]
+__all__ = ["InferencerManager", "InferenceThread"]
+
+if OpenClawInferenceAdapter is not None:
+    __all__ += ["OpenClawInferenceAdapter", "OpenClawServer", "ServerConfig"]
