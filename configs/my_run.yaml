@@ -1,0 +1,43 @@
+data:
+  db_path: data/simu_db/my_run.db
+  csv_path: data/our_twitter_sim/base-agent-data/test_110_good_bad_random_1.0_1.0_zzj.csv
+
+# 代理配置（可选，不设置则不使用代理）
+proxy:
+  http_proxy: ""
+  https_proxy: ""
+  no_proxy: "localhost,127.0.0.1"
+
+simulation:
+  num_timesteps: 5
+  clock_factor: 60
+  recsys_type: random
+  reflection: true
+  shared_reflection: true
+  private_message_storm: true
+  detection: false
+  safety_prompt_ratio: 0.0
+
+model:
+  num_agents: 110
+  model_random_seed: 42
+  cfgs:
+    - model_type: gpt-4o-mini
+      num: 110
+      server_url: https://api.openai.com/v1
+      model_path: openai
+      stop_tokens: []
+      temperature: 0.0
+
+inference:
+  model_type: [gpt-4o-mini]
+  model_path: [openai]
+  stop_tokens: []
+  server_url:
+    - host: https://api.openai.com/v1
+      ports: [8000, 8001, 8002, 8003]
+
+output:
+  base_dir: "./results"
+  run_name: "my_run"
+  add_timestamp: true
